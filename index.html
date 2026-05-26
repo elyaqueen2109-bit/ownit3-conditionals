@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.2, user-scalable=yes, viewport-fit=cover">
+  <title>Own It! 3 · Conditionals 1 & 2 Trainer</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #f9e7d2 0%, #fce1b9 100%);
+      font-family: 'Segoe UI', 'Poppins', 'Fredoka', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1.2rem;
+      margin: 0;
+    }
+
+    .trainer-container {
+      max-width: 800px;
+      width: 100%;
+      background: rgba(255, 251, 245, 0.9);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      background: #fffaf2;
+      border-radius: 3.5rem;
+      box-shadow: 0 30px 50px rgba(233, 186, 109, 0.25), 0 12px 30px rgba(0, 0, 0, 0.08);
+      padding: 2rem 2rem 1.8rem;
+      border: 2px solid #ffcf9a;
+      transition: all 0.2s ease;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #b45f2b;
+      text-align: center;
+      margin-bottom: 1.2rem;
+      letter-spacing: -0.3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    h1 span {
+      background: #ffdbb5;
+      padding: 0.2rem 1.2rem;
+      border-radius: 3rem;
+      font-size: 1.7rem;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.8rem;
+      background: #ffe6ce;
+      border-radius: 3rem;
+      padding: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      flex: 1 1 auto;
+      background: transparent;
+      border: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 0.7rem 0.5rem;
+      border-radius: 2.5rem;
+      color: #9b5a2b;
+      cursor: pointer;
+      transition: 0.2s;
+      background: #ffe6ce;
+      letter-spacing: 0.3px;
+    }
+    .tab-btn.active {
+      background: #ffffff;
+      color: #b45f2b;
+      box-shadow: 0 6px 14px rgba(201, 126, 48, 0.25);
+      border: 1px solid #ffb26e;
+    }
+
+    .panel {
+      display: none;
+    }
+    .panel.active {
+      display: block;
+    }
+
+    .grammar-reminder {
+      background: #fef7e9;
+      border-radius: 2.5rem;
+      padding: 1.5rem 1.8rem;
+      border: 2px dashed #f7b05e;
+      margin-bottom: 1.8rem;
+    }
+    .grammar-reminder h2 {
+      font-size: 1.7rem;
+      color: #aa4f1c;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .formula-box {
+      background: white;
+      border-radius: 2rem;
+      padding: 1.2rem;
+      margin: 0.8rem 0;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
+    }
+    .formula {
+      font-size: 1.3rem;
+      font-weight: 700;
+      background: #ffefd2;
+      display: inline-block;
+      padding: 0.5rem 1.2rem;
+      border-radius: 2.5rem;
+      margin: 0.3rem 0;
+    }
+    .example {
+      color: #6b4b30;
+      font-style: italic;
+      margin-left: 0.8rem;
+    }
+    .note {
+      background: #fff7e6;
+      border-left: 5px solid #f7b05e;
+      padding: 0.7rem 1rem;
+      border-radius: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 2.8rem;
+      padding: 2rem 2rem 1.8rem;
+      box-shadow: 0 20px 30px rgba(237, 163, 74, 0.18);
+      border: 1px solid #ffdbb5;
+      margin-bottom: 1.3rem;
+    }
+    .progress {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #b45f2b;
+      margin-bottom: 1rem;
+    }
+    .sentence-line {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #4b2e1d;
+      margin: 1rem 0 1.6rem;
+      line-height: 1.6;
+      word-break: break-word;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.3rem;
+    }
+    .sentence-line span {
+      white-space: pre-wrap;
+    }
+    .blank-input {
+      width: 130px;
+      padding: 0.4rem 0.7rem;
+      border: 2px solid #fdc28c;
+      border-radius: 1.8rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      background: #fffbf4;
+      text-align: center;
+      margin: 0 0.2rem;
+      transition: 0.2s;
+      outline: none;
+    }
+    .blank-input:focus {
+      border-color: #f68b2c;
+      box-shadow: 0 0 0 4px rgba(246, 139, 44, 0.2);
+    }
+    .action-buttons {
+      display: flex;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+      margin-top: 1.2rem;
+    }
+    .btn {
+      background: white;
+      border: 2px solid #f7b05e;
+      padding: 0.7rem 1.5rem;
+      border-radius: 2.5rem;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      background: #ffe9d1;
+      color: #8b4e24;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .btn-primary {
+      background: #fcae4b;
+      border-color: #fcae4b;
+      color: white;
+    }
+    .btn:hover {
+      background: #fec27e;
+      border-color: #f68b2c;
+    }
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.4rem;
+      gap: 0.7rem;
+    }
+    .feedback {
+      margin-top: 1rem;
+      font-weight: 600;
+      min-height: 2.2rem;
+      font-size: 1.1rem;
+    }
+    .correct-input {
+      border-color: #2ecc71 !important;
+      background: #eafaf1;
+    }
+    .incorrect-input {
+      border-color: #e74c3c !important;
+      background: #fdedec;
+    }
+
+    @media (max-width: 550px) {
+      .trainer-container {
+        padding: 1.5rem 1.2rem;
+      }
+      .sentence-line {
+        font-size: 1.3rem;
+      }
+      .blank-input {
+        width: 100px;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="trainer-container">
+  <h1>
+    🌟 Conditionals
+    <span>1 vs 2</span>
+  </h1>
+
+  <div class="tabs">
+    <button class="tab-btn active" id="tabReminderBtn">📘 Reminder</button>
+    <button class="tab-btn" id="tabTrainerBtn">🎯 Trainer</button>
+  </div>
+
+  <div class="panel active" id="reminderPanel">
+    <div class="grammar-reminder">
+      <h2>✨ First vs Second Conditional</h2>
+      <div class="formula-box">
+        <p style="font-weight:700; color:#b45f2b;">🔹 FIRST CONDITIONAL (real / possible)</p>
+        <div class="formula">If + present simple, will / might / could + base verb</div>
+        <p class="example">If I <strong>see</strong> a friend, I <strong>will say</strong> hello.</p>
+        <p><em>We use <strong>will</strong> when we are sure. <strong>Might / could</strong> show less certainty.</em></p>
+        <div class="note">
+          ⚡ <strong>Zero Conditional:</strong> When the result is always true, we use present simple in both parts.<br>
+          <span class="example">If you <strong>heat</strong> water, it <strong>boils</strong>.</span>
+        </div>
+      </div>
+      <div class="formula-box" style="margin-top:1rem;">
+        <p style="font-weight:700; color:#b45f2b;">🔸 SECOND CONDITIONAL (unreal / imaginary)</p>
+        <div class="formula">If + past simple, would + base verb</div>
+        <p class="example">If I <strong>had</strong> a superpower, I <strong>would fly</strong>.</p>
+        <p><em>We use it for unreal or unlikely situations (dreams, "if I were you" etc.).</em></p>
+      </div>
+      <p style="margin-top:1rem; color:#5b3c21;">✅ Short forms accepted: don't, won't, I'd, wouldn't.</p>
+    </div>
+  </div>
+
+  <div class="panel" id="trainerPanel">
+    <div class="card" id="cardContainer">
+      <div class="progress" id="progressText">1 / 50</div>
+      <div class="sentence-line" id="sentenceDisplay"></div>
+      <div class="action-buttons">
+        <button class="btn btn-primary" id="checkBtn">✅ Check</button>
+        <button class="btn" id="showHintBtn">💡 Hint</button>
+        <button class="btn" id="clearBtn">🔄 Clear</button>
+      </div>
+      <div class="feedback" id="feedbackMsg"></div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn" id="prevBtn">◀ Previous</button>
+      <button class="btn" id="nextBtn">Next ▶</button>
+    </div>
+    <p style="text-align:center; margin-top:0.8rem; color:#aa6b3c; font-size:0.9rem;">⌨️ Use left/right arrow keys to navigate</p>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // ---------- SENTENCES (Own It! 3 Units 1-5) ----------
+    const sentencesData = [
+      // REAL / POSSIBLE (First Conditional) with future markers
+      { raw: "If I ___ (meet) my best friend later, I ___ (cheer) her up.", answers: [["meet"], ["will cheer", "'ll cheer", "might cheer", "could cheer"]] },
+      { raw: "If she ___ (be) patient during the project, she ___ (not give) up easily.", answers: [["is", "'s"], ["won't give", "will not give", "might not give"]] },
+      { raw: "If I ___ (have) a difficult day, my brother always ___ (try) to cheer me up.", answers: [["have"], ["tries"]] },
+      { raw: "If they ___ (hang out) together tomorrow, they ___ (go) to the park.", answers: [["hang out"], ["will go", "'ll go", "might go"]] },
+      { raw: "If you ___ (take care of) your little sister this afternoon, Mum ___ (be) happy.", answers: [["take care of"], ["will be", "'ll be", "might be"]] },
+      { raw: "If we ___ (visit) the exhibition next week, we ___ (see) amazing sculptures.", answers: [["visit"], ["will see", "'ll see", "might see"]] },
+      { raw: "If she ___ (not practise) her lines, she ___ (forget) them during the performance.", answers: [["doesn't practise", "does not practise"], ["will forget", "'ll forget", "might forget"]] },
+      { raw: "If you ___ (go) to the contemporary dance show next Friday, you ___ (love) the music.", answers: [["go"], ["will love", "'ll love", "might love"]] },
+      { raw: "If the audience ___ (clap) loudly, the orchestra ___ (play) one more song.", answers: [["claps"], ["will play", "'ll play", "might play"]] },
+      { raw: "If she ___ (learn) the lyrics, she ___ (join) the rehearsal tomorrow.", answers: [["learns"], ["will join", "'ll join", "might join"]] },
+      { raw: "If the show ___ (start) at 7, we ___ (arrive) early.", answers: [["starts"], ["will arrive", "'ll arrive", "might arrive"]] },
+      { raw: "If you ___ (whisper), the teacher ___ (not hear) you.", answers: [["whisper"], ["won't hear", "will not hear"]] },
+      { raw: "If she ___ (post) that message on social media, everyone ___ (see) it.", answers: [["posts"], ["will see", "'ll see", "might see"]] },
+      { raw: "If you ___ (not know) the word, you ___ (can) gesture.", answers: [["don't know", "do not know"], ["can"]] },
+      { raw: "If we ___ (greet) people politely at the event, they ___ (feel) welcome.", answers: [["greet"], ["will feel", "'ll feel", "might feel"]] },
+      { raw: "If I ___ (tell) you a secret, you ___ (promise) not to tell anyone?", answers: [["tell"], ["will you promise"]] },
+      { raw: "If she ___ (describe) the picture, I ___ (draw) it.", answers: [["describes"], ["will draw", "'ll draw", "might draw"]] },
+      { raw: "If you ___ (speak) honestly at the meeting, people ___ (respect) you.", answers: [["speak"], ["will respect", "'ll respect", "might respect"]] },
+      { raw: "If you ___ (eat) too much junk food tonight, you ___ (feel) tired.", answers: [["eat"], ["will feel", "'ll feel", "might feel"]] },
+      { raw: "If she ___ (drink) enough water tomorrow, she ___ (have) more energy.", answers: [["drinks"], ["will have", "'ll have", "might have"]] },
+      { raw: "If we ___ (not protect) the environment in the future, marine life ___ (suffer).", answers: [["don't protect", "do not protect"], ["will suffer", "'ll suffer", "might suffer"]] },
+      { raw: "If you ___ (recycle) these bottles tomorrow, you ___ (help) the planet.", answers: [["recycle"], ["will help", "'ll help", "might help"]] },
+      { raw: "If she ___ (not waste) water this summer, the plants ___ (grow) better.", answers: [["doesn't waste", "does not waste"], ["will grow", "'ll grow", "might grow"]] },
+      { raw: "If we ___ (use) solar power more next year, we ___ (reduce) carbon dioxide.", answers: [["use"], ["will reduce", "'ll reduce", "might reduce"]] },
+      { raw: "If it ___ (rain) tomorrow, we ___ (stay) inside.", answers: [["rains"], ["will stay", "'ll stay", "might stay"]] },
+      { raw: "If you ___ (visit) the caves at night tomorrow, you ___ (see) bats.", answers: [["visit"], ["will see", "'ll see", "might see"]] },
+      { raw: "If she ___ (volunteer) at the summer camp, she ___ (take) care of children.", answers: [["volunteers"], ["will take", "'ll take", "might take"]] },
+      { raw: "If he ___ (give up) sugar, he ___ (feel) healthier.", answers: [["gives up"], ["will feel", "'ll feel", "might feel"]] },
+      { raw: "If we ___ (not do) something soon, the planet ___ (get) into trouble.", answers: [["don't do", "do not do"], ["will get", "'ll get", "might get"]] },
+      { raw: "If they ___ (not hurry), they ___ (miss) the bus.", answers: [["don't hurry", "do not hurry"], ["will miss", "'ll miss", "might miss"]] },
+      { raw: "If he ___ (not be) nervous tomorrow, he ___ (sing) better at the audition.", answers: [["isn't", "is not", "'s not"], ["will sing", "'ll sing", "might sing"]] },
+
+      // UNREAL / IMAGINARY (Second Conditional) with clear markers
+      { raw: "If I ___ (know) how to dance, I ___ (join) the contemporary performance.", answers: [["knew"], ["would join", "'d join"]] },
+      { raw: "If I ___ (be) more confident, I ___ (speak) in front of the class (but I'm not).", answers: [["were", "was"], ["would speak", "'d speak"]] },
+      { raw: "If I ___ (be) a famous artist, I ___ (create) street art everywhere.", answers: [["were", "was"], ["would create", "'d create"]] },
+      { raw: "If I ___ (have) tickets for the musical theatre, I ___ (invite) you right now.", answers: [["had"], ["would invite", "'d invite"]] },
+      { raw: "If I ___ (be) in a film, I ___ (play) the part of a hero.", answers: [["were", "was"], ["would play", "'d play"]] },
+      { raw: "If I ___ (can) speak three languages, I ___ (travel) more easily.", answers: [["could"], ["would travel", "'d travel"]] },
+      { raw: "If people ___ (not use) words, they ___ (communicate) with gestures.", answers: [["didn't use", "did not use"], ["would communicate", "'d communicate"]] },
+      { raw: "If I ___ (be) able to translate this, I ___ (help) you immediately.", answers: [["were", "was"], ["would help", "'d help"]] },
+      { raw: "If I ___ (be) a chef, I ___ (cook) healthy meals every day.", answers: [["were", "was"], ["would cook", "'d cook"]] },
+      { raw: "If there ___ (be) more electric cars, pollution ___ (decrease) dramatically.", answers: [["were", "was"], ["would decrease", "'d decrease"]] },
+      { raw: "If I ___ (live) near the ocean, I ___ (see) coral reefs every morning.", answers: [["lived"], ["would see", "'d see"]] },
+      { raw: "If I ___ (have) a garden, I ___ (grow) my own vegetables.", answers: [["had"], ["would grow", "'d grow"]] },
+      { raw: "If I ___ (find) a wallet on the street, I ___ (return) it (but I've never found one).", answers: [["found"], ["would return", "'d return"]] },
+      { raw: "If I ___ (be) an endangered animal, I ___ (want) people to protect me.", answers: [["were", "was"], ["would want", "'d want"]] },
+      { raw: "If I ___ (can) travel anywhere, I ___ (choose) Madagascar.", answers: [["could"], ["would choose", "'d choose"]] },
+      { raw: "If I ___ (win) the competition, I ___ (be) extremely happy (but I never win anything).", answers: [["won"], ["would be", "'d be"]] },
+      { raw: "If I ___ (not have) to study, I ___ (hang out) with my friends right now.", answers: [["didn't have", "did not have"], ["would hang out", "'d hang out"]] },
+      { raw: "If you ___ (look up to) someone, you ___ (admire) them (this is always true).", answers: [["look up to"], ["admire"]] },
+      { raw: "If she ___ (depend on) you, she ___ (trust) you completely.", answers: [["depends on"], ["trusts"]] },
+      { raw: "If he ___ (not be) so shy, he ___ (talk) to everyone at the party.", answers: [["weren't", "was not", "wasn't"], ["would talk", "'d talk"]] }
+    ];
+
+    // Shuffle to mix conditionals randomly
+    function shuffleArray(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+    }
+    shuffleArray(sentencesData);
+
+    // Parse raw sentences -> parts & blanks (extract verb without brackets)
+    const parsedSentences = sentencesData.map(item => {
+      const raw = item.raw;
+      const answers = item.answers;
+      const parts = [];
+      const blanks = [];
+      let remaining = raw;
+      let idx = 0;
+      while (remaining.includes('___ (')) {
+        const before = remaining.substring(0, remaining.indexOf('___ ('));
+        parts.push(before);
+        const afterStart = remaining.indexOf('___ (') + 4;
+        const verbEnd = remaining.indexOf(')', afterStart);
+        let verb = remaining.substring(afterStart, verbEnd).trim();
+        verb = verb.replace(/[()]/g, '').trim();
+        blanks.push({ verb: verb, answers: answers[idx] });
+        parts.push('___');
+        remaining = remaining.substring(verbEnd + 1);
+        idx++;
+      }
+      parts.push(remaining);
+      return { parts, blanks };
+    });
+
+    const total = parsedSentences.length;
+    let currentIndex = 0;
+
+    const tabReminderBtn = document.getElementById('tabReminderBtn');
+    const tabTrainerBtn = document.getElementById('tabTrainerBtn');
+    const reminderPanel = document.getElementById('reminderPanel');
+    const trainerPanel = document.getElementById('trainerPanel');
+    const progressText = document.getElementById('progressText');
+    const sentenceDisplay = document.getElementById('sentenceDisplay');
+    const checkBtn = document.getElementById('checkBtn');
+    const showHintBtn = document.getElementById('showHintBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const feedbackMsg = document.getElementById('feedbackMsg');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    function playSound(type = 'click') {
+      try {
+        const ac = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ac.createOscillator();
+        const gain = ac.createGain();
+        osc.connect(gain);
+        gain.connect(ac.destination);
+        if (type === 'correct') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(620, ac.currentTime);
+          gain.gain.setValueAtTime(0.15, ac.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.2);
+          osc.start(ac.currentTime);
+          osc.stop(ac.currentTime + 0.2);
+        } else if (type === 'wrong') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(280, ac.currentTime);
+          gain.gain.setValueAtTime(0.12, ac.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.25);
+          osc.start(ac.currentTime);
+          osc.stop(ac.currentTime + 0.25);
+        } else {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(440, ac.currentTime);
+          gain.gain.setValueAtTime(0.08, ac.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+          osc.start(ac.currentTime);
+          osc.stop(ac.currentTime + 0.12);
+        }
+      } catch (e) {}
+    }
+
+    function renderCard() {
+      const item = parsedSentences[currentIndex];
+      sentenceDisplay.innerHTML = '';
+      item.parts.forEach((part, i) => {
+        if (part === '___') {
+          const blankIdx = item.parts.slice(0, i).filter(p => p === '___').length;
+          const blank = item.blanks[blankIdx];
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.className = 'blank-input';
+          input.placeholder = blank.verb;
+          input.setAttribute('data-blank-index', blankIdx);
+          sentenceDisplay.appendChild(input);
+        } else {
+          const span = document.createElement('span');
+          span.textContent = part;
+          sentenceDisplay.appendChild(span);
+        }
+      });
+      progressText.textContent = `${currentIndex + 1} / ${total}`;
+      feedbackMsg.innerHTML = '';
+    }
+
+    function getInputValues() {
+      const inputs = document.querySelectorAll('#sentenceDisplay .blank-input');
+      return Array.from(inputs).map(inp => inp.value.trim());
+    }
+
+    function normalize(str) {
+      return str.replace(/’/g, "'").replace(/\s+/g, ' ').toLowerCase().trim();
+    }
+
+    function checkAnswers() {
+      const item = parsedSentences[currentIndex];
+      const inputs = document.querySelectorAll('#sentenceDisplay .blank-input');
+      const values = getInputValues();
+      let allCorrect = true;
+      inputs.forEach((inp, idx) => {
+        const userVal = normalize(values[idx]);
+        const accepted = item.blanks[idx].answers.map(a => normalize(a));
+        if (userVal === '' || !accepted.includes(userVal)) {
+          inp.classList.add('incorrect-input');
+          inp.classList.remove('correct-input');
+          allCorrect = false;
+        } else {
+          inp.classList.add('correct-input');
+          inp.classList.remove('incorrect-input');
+        }
+      });
+      if (allCorrect && values.every(v => v !== '')) {
+        feedbackMsg.innerHTML = '🎉 Perfect! All correct!';
+        playSound('correct');
+      } else {
+        const possible = item.blanks.map(b => b.answers.join(' / ')).join('  |  ');
+        feedbackMsg.innerHTML = `❌ Some answers need checking. Possible: <strong>${possible}</strong>`;
+        playSound('wrong');
+      }
+    }
+
+    function showHint() {
+      const item = parsedSentences[currentIndex];
+      const hints = item.blanks.map(b => b.answers[0]).join('  /  ');
+      feedbackMsg.innerHTML = `💬 Hint: <strong>${hints}</strong>`;
+      playSound('click');
+    }
+
+    function clearInputs() {
+      document.querySelectorAll('#sentenceDisplay .blank-input').forEach(inp => {
+        inp.value = '';
+        inp.classList.remove('correct-input', 'incorrect-input');
+      });
+      feedbackMsg.innerHTML = '';
+    }
+
+    function goToPrev() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        renderCard();
+        playSound('click');
+      }
+    }
+
+    function goToNext() {
+      if (currentIndex < total - 1) {
+        currentIndex++;
+        renderCard();
+        playSound('click');
+      }
+    }
+
+    function showReminder() {
+      reminderPanel.classList.add('active');
+      trainerPanel.classList.remove('active');
+      tabReminderBtn.classList.add('active');
+      tabTrainerBtn.classList.remove('active');
+    }
+
+    function showTrainer() {
+      reminderPanel.classList.remove('active');
+      trainerPanel.classList.add('active');
+      tabReminderBtn.classList.remove('active');
+      tabTrainerBtn.classList.add('active');
+      renderCard();
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (trainerPanel.classList.contains('active')) {
+        if (e.key === 'ArrowLeft' && document.activeElement?.tagName !== 'INPUT') {
+          e.preventDefault();
+          goToPrev();
+        } else if (e.key === 'ArrowRight' && document.activeElement?.tagName !== 'INPUT') {
+          e.preventDefault();
+          goToNext();
+        } else if (e.key === 'Enter' && document.activeElement?.tagName === 'INPUT') {
+          e.preventDefault();
+          checkAnswers();
+        }
+      }
+    });
+
+    tabReminderBtn.addEventListener('click', showReminder);
+    tabTrainerBtn.addEventListener('click', showTrainer);
+    checkBtn.addEventListener('click', checkAnswers);
+    showHintBtn.addEventListener('click', showHint);
+    clearBtn.addEventListener('click', clearInputs);
+    prevBtn.addEventListener('click', goToPrev);
+    nextBtn.addEventListener('click', goToNext);
+
+    renderCard();
+  })();
+</script>
+</body>
+</html>
